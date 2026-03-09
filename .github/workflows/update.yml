@@ -1,8 +1,6 @@
 name: update bins
 
 on:
-  schedule:
-    - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:
@@ -13,15 +11,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: install deps
-        run: pip install requests beautifulsoup4
+        run: |
+          pip install requests
+          pip install beautifulsoup4
 
       - name: run script
         run: python script.py
-
-      - name: commit calendar
-        run: |
-          git config --global user.name bot
-          git config --global user.email bot@github.com
-          git add bins.ics
-          git commit -m "update bins" || exit 0
-          git push
