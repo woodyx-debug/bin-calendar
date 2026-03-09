@@ -1,0 +1,27 @@
+name: Update calendar
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: node script.js
+
+      - name: Commit calendar
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add bins.ics
+          git commit -m "update calendar" || exit 0
+          git push
