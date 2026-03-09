@@ -1,0 +1,19 @@
+name: update bins
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install deps
+        run: |
+          pip install requests
+          pip install beautifulsoup4
+
+      - name: run script
+        run: python script.py
